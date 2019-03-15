@@ -29,6 +29,7 @@ public class Main {
             game.getCurrentPlayer().addMoves(move);
         } while (!game.isWon(game.getCurrentPlayer()));
 
+        printBoard(game.presentStatusOfBoard());
         System.out.println(game.getCurrentPlayer().getName() + " has won the game");
     }
 
