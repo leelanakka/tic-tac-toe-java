@@ -24,7 +24,7 @@ public class Main {
             System.out.println(game.getCurrentPlayer().getName() + " please enter your choice");
             int move = scanner.nextInt();
             while (!game.placeMove(move)) {
-                System.out.println("please enter a valid input ");
+                System.out.println("please enter a valid input");
                 move = scanner.nextInt();
             }
 
