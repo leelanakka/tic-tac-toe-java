@@ -59,6 +59,10 @@ public class Game {
 
 
     public boolean isGameFinished() {
+        if (possibleMoves.size() < 1) {
+            System.out.println("Match is Drawn");
+            System.exit(0);
+        }
         return getCurrentPlayer().hasWon(this.winningChances);
     }
 
