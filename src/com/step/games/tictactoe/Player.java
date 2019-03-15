@@ -27,7 +27,7 @@ public class Player {
     }
 
     public ArrayList<Integer> getMoves() {
-        return this.moves;
+        return new ArrayList<>(this.moves);
     }
 
     public boolean hasWon(List<List> possibleMoves) {
