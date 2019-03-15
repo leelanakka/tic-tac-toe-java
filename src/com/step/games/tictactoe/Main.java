@@ -1,3 +1,5 @@
+package com.step.games.tictactoe;
+
 import java.util.Map;
 import java.util.Scanner;
 

@@ -1,3 +1,5 @@
+package com.step.games.tictactoe;
+
 import java.util.*;
 
 public class Game {
