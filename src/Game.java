@@ -2,10 +2,9 @@ import java.util.*;
 
 public class Game {
     private final Set<Integer> possibleMoves = new HashSet<>();
-
-    private Player[] players = new Player[2];
     private final List<List> winningChances;
-    private char[] board = new char[]{' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
+    private Player[] players = new Player[2];
+    private int currentPlayerIndex;
 
     public Game(Player player1, Player player2) {
         this.players[0] = player1;
@@ -29,25 +28,32 @@ public class Game {
         winningChances.add(Arrays.asList(3, 6, 9));
         winningChances.add(Arrays.asList(1, 5, 9));
         winningChances.add(Arrays.asList(3, 5, 7));
+
+        this.currentPlayerIndex = 0;
     }
 
-
-//    public void printBoard() {
-//        System.out.print("\n -------------\n");
-//        for (int i = 0; i < this.board.length; i++) {
-//            System.out.print(" | " + this.board[i]);
-//            if (i % 3 == 2) {
-//                System.out.print(" |\n -------------\n");
-//            }
-//        }
-//    }
-
-    public boolean mapMoves(int move) {
+    public boolean placeMove(int move) {
         if (this.possibleMoves.contains(move)) {
             this.possibleMoves.remove(move);
             return true;
         }
         return false;
+    }
+
+    public Map presentStatusOfBoard() {
+        HashMap<Integer, Character> totalMoves = new HashMap<>(9);
+        ArrayList player1Moves = players[0].getMoves();
+        char player1Symbol = players[0].getSymbol();
+        char player2Symbol = players[1].getSymbol();
+        ArrayList player2Moves = players[1].getMoves();
+        for (Object move : player1Moves) {
+            totalMoves.put((Integer) move, player1Symbol);
+        }
+
+        for (Object move : player2Moves) {
+            totalMoves.put((Integer) move, player2Symbol);
+        }
+        return totalMoves;
     }
 
 
@@ -56,12 +62,10 @@ public class Game {
     }
 
     public Player getCurrentPlayer() {
-        return this.players[0];
+        return this.players[this.currentPlayerIndex % 2];
     }
 
     public void changeTurn() {
-        Player temp = players[0];
-        players[0] = players[1];
-        players[1] = temp;
+        this.currentPlayerIndex++;
     }
 }
