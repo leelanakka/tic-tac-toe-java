@@ -23,24 +23,21 @@ public class Main {
             printBoard(game.presentStatusOfBoard());
             System.out.println(game.getCurrentPlayer().getName() + " please enter your choice");
             int move = scanner.nextInt();
-            while (!game.placeMove(move)) {
+            while (!game.isValidMove(move)) {
                 System.out.println("please enter a valid input");
                 move = scanner.nextInt();
             }
-
-            game.getCurrentPlayer().addMoves(move);
-        } while (!game.isWon(game.getCurrentPlayer()));
+            game.placeMove(move);
+        } while (!game.isGameFinished());
 
         printBoard(game.presentStatusOfBoard());
         System.out.println(game.getCurrentPlayer().getName() + " has won the game");
     }
 
-    public static void printBoard(Map moves) {
+    public static void printBoard(Map<Integer, Character> moves) {
         System.out.print("\n -------------\n");
-        for (int index = 1; index <=9; index++) {
-            if (moves.get(index) == null) {
-                moves.put(index, " ");
-            }
+        for (int index = 1; index <= 9; index++) {
+            moves.putIfAbsent(index, ' ');
             System.out.print(" | " + moves.get(index));
             if (index % 3 == 0) {
                 System.out.print(" |\n -------------\n");

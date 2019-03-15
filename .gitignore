@@ -2,3 +2,4 @@
 learning_java.iml
 out/
 build/*
+.gradle

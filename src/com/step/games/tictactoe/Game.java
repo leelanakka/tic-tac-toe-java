@@ -4,45 +4,44 @@ import java.util.*;
 
 public class Game {
     private final Set<Integer> possibleMoves = new HashSet<>();
-    private final List<List> winningChances;
+    private final List<List<Integer>> winningChances;
     private Player[] players = new Player[2];
     private int currentPlayerIndex;
 
     public Game(Player player1, Player player2) {
         this.players[0] = player1;
         this.players[1] = player2;
-        possibleMoves.add(1);
-        possibleMoves.add(2);
-        possibleMoves.add(3);
-        possibleMoves.add(4);
-        possibleMoves.add(5);
-        possibleMoves.add(6);
-        possibleMoves.add(7);
-        possibleMoves.add(8);
-        possibleMoves.add(9);
+        for (int index = 1; index <= 9; index++) {
+            possibleMoves.add(index);
+        }
 
-        this.winningChances = new ArrayList<>(8);
-        winningChances.add(Arrays.asList(1, 2, 3));
-        winningChances.add(Arrays.asList(4, 5, 6));
-        winningChances.add(Arrays.asList(7, 8, 9));
-        winningChances.add(Arrays.asList(1, 4, 7));
-        winningChances.add(Arrays.asList(2, 5, 8));
-        winningChances.add(Arrays.asList(3, 6, 9));
-        winningChances.add(Arrays.asList(1, 5, 9));
-        winningChances.add(Arrays.asList(3, 5, 7));
-
+        this.winningChances = getWinningChances();
         this.currentPlayerIndex = 0;
     }
 
-    public boolean placeMove(int move) {
-        if (this.possibleMoves.contains(move)) {
-            this.possibleMoves.remove(move);
-            return true;
-        }
-        return false;
+    private List<List<Integer>> getWinningChances() {
+        List<List<Integer>> dummyName = new ArrayList<>(8);
+        dummyName.add(Arrays.asList(1, 2, 3));
+        dummyName.add(Arrays.asList(4, 5, 6));
+        dummyName.add(Arrays.asList(7, 8, 9));
+        dummyName.add(Arrays.asList(1, 4, 7));
+        dummyName.add(Arrays.asList(2, 5, 8));
+        dummyName.add(Arrays.asList(3, 6, 9));
+        dummyName.add(Arrays.asList(1, 5, 9));
+        dummyName.add(Arrays.asList(3, 5, 7));
+        return dummyName;
     }
 
-    public Map presentStatusOfBoard() {
+    public boolean placeMove(int move) {
+        getCurrentPlayer().addMoves(move);
+        return this.possibleMoves.remove(move);
+    }
+
+    public boolean isValidMove(int move) {
+        return this.possibleMoves.contains(move);
+    }
+
+    public Map<Integer, Character> presentStatusOfBoard() {
         HashMap<Integer, Character> totalMoves = new HashMap<>(9);
         ArrayList player1Moves = players[0].getMoves();
         char player1Symbol = players[0].getSymbol();
@@ -59,8 +58,8 @@ public class Game {
     }
 
 
-    public boolean isWon(Player currentPlayer) {
-        return currentPlayer.hasWon(winningChances);
+    public boolean isGameFinished() {
+        return getCurrentPlayer().hasWon(this.winningChances);
     }
 
     public Player getCurrentPlayer() {

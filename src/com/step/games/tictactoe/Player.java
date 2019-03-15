@@ -30,7 +30,7 @@ public class Player {
         return new ArrayList<>(this.moves);
     }
 
-    public boolean hasWon(List<List> possibleMoves) {
+    public boolean hasWon(List<List<Integer>> possibleMoves) {
         Iterator iterator = possibleMoves.iterator();
         for (int index = 0; index < 8; index++) {
             List setOfMoves = (List) iterator.next();
