@@ -2,13 +2,13 @@ package com.step.games.tictactoe;
 
 import java.util.*;
 
-public class Game {
+class Game {
     private final Set<Integer> possibleMoves = new HashSet<>();
     private final List<List<Integer>> winningChances;
     private Player[] players = new Player[2];
     private int currentPlayerIndex;
 
-    public Game(Player player1, Player player2) {
+    Game(Player player1, Player player2) {
         this.players[0] = player1;
         this.players[1] = player2;
         for (int index = 1; index <= 9; index++) {
@@ -32,16 +32,16 @@ public class Game {
         return dummyName;
     }
 
-    public boolean placeMove(int move) {
+    boolean placeMove(int move) {
         getCurrentPlayer().addMoves(move);
         return this.possibleMoves.remove(move);
     }
 
-    public boolean isValidMove(int move) {
+    boolean isValidMove(int move) {
         return this.possibleMoves.contains(move);
     }
 
-    public Map<Integer, Character> presentStatusOfBoard() {
+    Map<Integer, Character> presentStatusOfBoard() {
         HashMap<Integer, Character> totalMoves = new HashMap<>(9);
         ArrayList player1Moves = players[0].getMoves();
         char player1Symbol = players[0].getSymbol();
@@ -58,7 +58,7 @@ public class Game {
     }
 
 
-    public boolean isGameFinished() {
+    boolean isGameFinished() {
         if (possibleMoves.size() < 1) {
             System.out.println("Match is Drawn");
             System.exit(0);
@@ -66,11 +66,11 @@ public class Game {
         return getCurrentPlayer().hasWon(this.winningChances);
     }
 
-    public Player getCurrentPlayer() {
+    Player getCurrentPlayer() {
         return this.players[this.currentPlayerIndex % 2];
     }
 
-    public void changeTurn() {
+    void changeTurn() {
         this.currentPlayerIndex++;
     }
 }
